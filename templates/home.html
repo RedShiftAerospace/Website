@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RedShift Aerospace</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/avif" href="{{ url_for('static', filename='assets/images/iconita.avif') }}">
+
+<script>
+  document.documentElement.classList.add('nav-prep');
+</script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/changelog.css') }}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+  body, body * { color: #fff !important; }
+
+  /* =========================================================================
+     ðŸŽ¯ TEHNICA FLOAT: IMAGINE ÃŽN DREAPTA + TEXTUL CURGE PE SUB EA (BILINGV)
+     ========================================================================= */
+  .home-hero {
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+  }
+
+  .project-card {
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid #222;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 16px 32px rgba(0,0,0,0.3);
+    overflow: hidden; /* Clearfix nativ */
+  }
+
+  /* Containerul imaginii se aliniazÄƒ Ã®n dreapta, permiÈ›Ã¢nd textului sÄƒ urce lÃ¢ngÄƒ ea */
+  .project-img-container {
+    float: right !important;
+    width: 38% !important;
+    max-width: 440px !important;
+    margin-left: 24px !important;
+    margin-bottom: 12px !important;
+    background: rgba(0,0,0,0.15);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .pilot-side-img {
+    width: 100% !important;
+    height: auto !important; /* ÃŽÈ™i pÄƒstreazÄƒ aspect ratio-ul nativ (landscape/portrait/pÄƒtrat) */
+    max-height: 380px !important;
+    object-fit: contain !important; /* Nu deformeazÄƒ sau taie pixelii */
+    border-radius: 6px;
+    display: block;
+  }
+
+  /* Textul umple spaÈ›iul din stÃ¢nga È™i curge sub imagine cÃ¢nd o depÄƒÈ™eÈ™te Ã®n lungime */
+  .project-text p {
+    text-align: justify;
+    line-height: 1.65;
+    font-size: 15px;
+    color: #eee;
+    margin: 0;
+  }
+
+  /* Dimensiuni rafinate pentru sponsori */
+  .parteneri div[style*="text-align:center"] {
+    width: 140px !important;
+    margin: 10px 15px !important;
+    flex: 0 0 auto !important;
+  }
+
+  .parteneri img {
+    width: auto !important;
+    height: 45px !important;
+    object-fit: contain !important;
+    max-width: 100% !important;
+    filter: grayscale(20%) opacity(0.9);
+    transition: filter 0.3s ease;
+  }
+  .parteneri img:hover { filter: grayscale(0%) opacity(1); }
+
+  .gallery-img {
+    width: 100% !important;
+    height: 200px !important;
+    object-fit: cover !important;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .gallery-img:hover { transform: scale(1.05); }
+
+  .blurred-bg {
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 12px;
+    box-shadow: 0 16px 32px rgba(0,0,0,0.45);
+    padding: 32px 36px 32px 44px;
+    margin: 32px 0 0 0;
+  }
+  body.evolution-active .footer-brand img,
+  body.evolution-active .footer-brand p { display: none !important; }
+  .team-card h3 { font-size: 20px; }
+
+  .lightbox {
+    display: none; position: fixed; z-index: 10000; padding-top: 50px;
+    left: 0; top: 0; width: 100%; height: 100%; overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8); animation: fadeIn 0.3s;
+  }
+  .lightbox.active { display: flex; justify-content: center; align-items: center; padding-top: 0; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .lightbox-content { max-width: 90%; max-height: 90vh; object-fit: contain; animation: zoomIn 0.3s; }
+  @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .lightbox-close { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; }
+  .lightbox-close:hover { color: #e63946; }
+  .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 30px; cursor: pointer; padding: 10px 15px; user-select: none; }
+  .lightbox-prev { left: 20px; }
+  .lightbox-next { right: 20px; }
+  .lightbox-nav:hover { color: #e63946; }
+
+  .tech-tab-btn { background: #111; color: #888 !important; border: 1px solid #222; }
+  .tech-tab-btn:hover { background: #1a1a1a; color: #fff !important; }
+  .tech-tab-btn.active-tab { background: #fff; color: #000 !important; border-color: #fff; }
+
+  .captcha-container {
+    display: flex; align-items: center; background: #0d0d0d; border: 1px solid #222; padding: 12px 16px; border-radius: 6px; margin-bottom: 15px; width: fit-content; gap: 12px;
+  }
+  .captcha-checkbox { width: 20px; height: 20px; cursor: pointer; accent-color: #EC1F24; }
+
+  /* LogicÄƒ bilingvÄƒ */
+  body:not(.lang-ro) [lang="ro"] { display: none !important; }
+  body.lang-ro [lang="en"] { display: none !important; }
+
+  @media (max-width: 768px) {
+    .pages, section.page {
+      padding: 10px 10px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 auto !important;
+      box-sizing: border-box !important;
+      float: none !important;
+    }
+    .header {
+      position: static !important;
+      width: 100% !important;
+      background: #000 !important;
+      height: auto !important;
+      padding: 15px 0 !important;
+    }
+    .header-inner {
+      flex-direction: column !important;
+      gap: 12px !important;
+      padding: 0 15px !important;
+      text-align: center !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .nav-links {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 10px 8px !important;
+      width: 100% !important;
+      position: static !important;
+    }
+    .nav-links a { font-size: 13px !important; padding: 4px 6px !important; margin: 0 !important; }
+    .home-hero { padding: 60px 15px 40px 15px !important; min-height: auto !important; height: auto !important; text-align: center !important; }
+    .hero-text h1 { font-size: 26px !important; line-height: 1.3 !important; text-align: center !important; }
+    .blurred-bg { width: 100% !important; max-width: 100% !important; padding: 24px 20px !important; margin: 20px 0 !important; text-align: center !important; box-sizing: border-box !important; }
+    .blurred-bg h1, .blurred-bg h2 { text-align: center !important; font-size: 22px; }
+    .blurred-bg p { text-align: center !important; font-size: 14px; line-height: 1.6; }
+    .parteneri div[style*="display:flex"] { display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; justify-content: center !important; gap: 20px !important; width: 100% !important; }
+    .parteneri div[style*="text-align:center"] { width: 100px !important; margin: 5px !important; }
+    .parteneri img { height: 35px !important; }
+    .projects-grid { grid-template-columns: 100% !important; width: 100% !important; }
+    .project-card { padding: 20px !important; }
+    /* Pe mobil anulÄƒm float-ul È™i punem imaginea sus, textul dedesubt pentru lizibilitate */
+    .project-img-container { float: none !important; width: 100% !important; max-width: 100% !important; margin: 0 0 15px 0 !important; }
+    .pilot-side-img { max-height: 240px !important; width: auto !important; margin: 0 auto; }
+    #technical.page { padding: 0 !important; width: 100% !important; left: 0 !important; margin-left: 0 !important; }
+    .tech-viewer-container { flex-direction: column !important; padding: 15px 10px !important; width: 100% !important; }
+    .viewer-window { width: 100% !important; height: 380px !important; }
+    .viewer-controls { width: 100% !important; max-width: 100% !important; min-width: 100% !important; }
+    .gallery-grid { display: flex !important; flex-wrap: wrap !important; gap: 10px !important; justify-content: center !important; }
+    .gallery-img { flex: 0 0 46% !important; width: 46% !important; height: 110px !important; }
+    .contact-container { flex-direction: column !important; gap: 35px !important; }
+    .contact-info, .contact-form { width: 100% !important; }
+    .contact-details > div { display: flex !important; flex-direction: column !important; align-items: center !important; }
+    .social-links { justify-content: center !important; }
+    #recruitment-heading { white-space: normal !important; font-size: 21px !important; text-align: center !important; }
+    div[style*="border-top: 2px solid #EC1F24"] { display: flex !important; flex-direction: column !important; align-items: center !important; }
+    .contact-form form { align-items: center !important; }
+    .contact-form input, .contact-form textarea { width: 100% !important; text-align: center !important; }
+    .captcha-container { margin: 0 auto 15px auto !important; }
+    .contact-form button { width: 100% !important; max-width: 280px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div style="display: flex; align-items: center; gap: 20px;">
+      <div class="logo">
+        <a href="#" class="logo-link" onclick="showPage('home'); return false;">
+          <img src="{{ url_for('static', filename='assets/images/logo.avif') }}" alt="RedShift Aerospace">
+        </a>
+      </div>
+      {% if statut_visible %}
+      <a href="{{ url_for('static', filename=statut_pdf_path) }}" target="_blank" rel="noopener" style="text-decoration: none; font-weight: 700; font-size: 14px; letter-spacing: 0.5px; border: 1px solid rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 4px; background: rgba(255,255,255,0.05); transition: background 0.2s;">
+        <span lang="en">Legal Statuts</span>
+        <span lang="ro">Statut Legal</span>
+      </a>
+      {% endif %}
+    </div>
+
+    <nav class="nav-links">
+      <a onclick="showPage('home')"><span lang="en">Home</span><span lang="ro">AcasÄƒ</span></a>
+      <a onclick="showPage('projects')"><span lang="en">Projects</span><span lang="ro">Proiecte</span></a>
+      <a onclick="showPage('technical')"><span lang="en">Technical</span><span lang="ro">Tehnic</span></a>
+      <a onclick="showPage('about')"><span lang="en">Team</span><span lang="ro">EchipÄƒ</span></a>
+      <a onclick="showPage('changelog')"><span lang="en">Development Timeline</span><span lang="ro">Istoric</span></a>
+      <a onclick="showPage('contact')"><span lang="en">Contact</span><span lang="ro">Contact</span></a>
+      <a class="lang-switch" onclick="toggleLanguage()" style="cursor: pointer; font-weight: bold; color: #EC1F24 !important;" id="langBtn">EN</a>
+    </nav>
+  </div>
+</header>
+
+<main class="pages">
+
+  <section id="home" class="page active">
+    <section class="home-hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 lang="en">Where Technology<br>Meets Ambition</h1>
+          <h1 lang="ro">Unde Tehnologia<br>ÃŽntÃ¢lnieÈ™te AmbiÈ›ia</h1>
+        </div>
+      </div>
+    </section>
+
+    <div class="blurred-bg">
+      <h1>RedShift Aerospace</h1>
+      <p lang="en">RedShift Aero is an initiative led by students from the Faculty of Physics, BabeÈ™-Bolyai University in Cluj-Napoca, providing a space dedicated to academic excellence and engineering development. Our team transforms a passion for science into tangible projects, participating in international scientific competitions and developing innovative technologies such as CanSat platforms and experimental space vehicles. Through these experiences, we prepare future engineers to push the boundaries of knowledge and contribute actively to space exploration.</p>
+      <p lang="ro">RedShift Aero este o iniÈ›iativÄƒ condusÄƒ de studenÈ›i ai FacultÄƒÈ›ii de FizicÄƒ din cadrul UniversitÄƒÈ›ii BabeÈ™-Bolyai din Cluj-Napoca, oferind un spaÈ›iu dedicat excelenÈ›ei academice È™i dezvoltÄƒrii inginereÈ™ti. Echipa noastrÄƒ transformÄƒ pasiunea pentru È™tiinÈ›Äƒ Ã®n proiecte palpable, participÃ¢nd la competiÈ›ii È™tiinÈ›ifice internaÈ›ionale È™i dezvoltÃ¢nd tehnologii inovatoare precum platforme CanSat È™i vehicule spaÈ›iale experimentale. Prin aceste exprienÈ›e, pregÄƒtim viitorii ingineri sÄƒ depÄƒÈ™eascÄƒ limitele cunoaÈ™terii È™i sÄƒ contribuie activ la explorarea spaÈ›iului.</p>
+    </div>
+
+    <section class="founders-section" style="margin-top:36px;">
+      <div class="blurred-bg">
+        <h2 style="color:#e63946; margin-bottom:10px;" lang="en">Message from the Founders</h2>
+        <h2 style="color:#e63946; margin-bottom:10px;" lang="ro">Mesaj de la Fondatori</h2>
+        <p lang="en">RedShift Aerospace was born from a shared dream: to create a space where curiosity, ambition, and technical skill could come together to achieve something greater than ourselves. We believe that true progress is made when people are empowered to experiment, to fail, and to try againâ€”always reaching for new heights. Our journey has been one of learning, resilience, and teamwork, and we are proud to see our vision take shape through the dedication of every member. We invite you to join us, to challenge boundaries, and to help shape the future of aerospace together.<br><span style="font-style:italic; color:#bbb;">â€” The Founders</span></p>
+        <p lang="ro">RedShift Aerospace s-a nÄƒscut dintr-un vis comun: crearea unui spaÈ›iu Ã®n care curiozitatea, ambiÈ›ia È™i abilitÄƒÈ›ile tehnice sÄƒ se poatÄƒ uni pentru a realiza ceva mai mare decÃ¢t noi Ã®nÈ™ine. Credem cÄƒ progresul adevÄƒrat se face atunci cÃ¢nd oamenii sunt Ã®mputerniciÈ›i sÄƒ experimenteze, sÄƒ eÈ™ueze È™i sÄƒ Ã®ncerce din nou â€” È›intind mereu spre noi Ã®nÄƒlÈ›imi. CÄƒlÄƒtoria noastrÄƒ a fost una a Ã®nvÄƒÈ›Äƒrii, rezilienÈ›ei È™i muncii Ã®n echipÄƒ, È™i suntem mÃ¢ndri sÄƒ vedem viziunea noastrÄƒ prinzÃ¢nd contur prin dedicarea fiecÄƒrui membru. VÄƒ invitÄƒm sÄƒ vÄƒ alÄƒturaÈ›i nouÄƒ, sÄƒ provocÄƒm graniÈ›ele È™i sÄƒ modelÄƒm Ã®mpreunÄƒ viitorul aerospaÈ›ial.<br><span style="font-style:italic; color:#bbb;">â€” Fondatorii</span></p>
+      </div>
+    </section>
+
+    <section class="parteneri" style="margin-top:36px;">
+      <div class="blurred-bg">
+        <h2 style="color:#457b9d; margin-bottom:18px;" lang="en">Partners/Sponsors</h2>
+        <h2 style="color:#457b9d; margin-bottom:18px;" lang="ro">Parteneri / Sponsori</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:48px; align-items:center; justify-content:center; margin-bottom:18px;">
+          {% if sponsors %}
+            {% for s in sponsors %}
+              <div style="text-align:center;">
+                <img src="{{ url_for('static', filename=s.img) }}" alt="{{ s.name }}">
+                <div>{{ s.name }}</div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div style="color: #555; font-family: monospace;" lang="en">No partners added yet.</div>
+            <div style="color: #555; font-family: monospace;" lang="ro">Nu au fost adÄƒugaÈ›i parteneri Ã®ncÄƒ.</div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+
+    <section class="gallery" style="margin-top:36px;">
+      <div class="blurred-bg">
+        <h2 style="color:#e63946; margin-bottom:18px;" lang="en">Gallery</h2>
+        <h2 style="color:#e63946; margin-bottom:18px;" lang="ro">Galerie Foto</h2>
+        <div class="gallery-grid" id="gallery-grid">
+          <img src="{{ url_for('static', filename='assets/Galerie/DSCF5552.avif') }}" alt="DSCF5552" class="gallery-img">
+          <img src="{{ url_for('static', filename='assets/Galerie/DSCF6788.avif') }}" alt="DSCF6788" class="gallery-img">
+          <img src="{{ url_for('static', filename='assets/Galerie/DSCF6809.avif') }}" alt="DSCF6809" class="gallery-img">
+          <img src="{{ url_for('static', filename='assets/Galerie/_FVN6988.avif') }}" alt="FVN6988" class="gallery-img">
+          <img src="{{ url_for('static', filename='assets/Galerie/_FVN7125.avif') }}" alt="FVN7125" class="gallery-img">
+          <img src="{{ url_for('static', filename='assets/Galerie/_FVN8202.avif') }}" alt="FVN8202" class="gallery-img">
+          <img src="{{ url_for('static', filename='assets/Galerie/_FVN8215.avif') }}" alt="FVN8215" class="gallery-img">
+          <img src="{{ url_for('static', filename='assets/Galerie/_FVN8247.avif') }}" alt="FVN8247" class="gallery-img">
+          <img src="{{ url_for('static', filename='assets/Galerie/_FVN8289.avif') }}" alt="FVN8289" class="gallery-img">
+          <img src="{{ url_for('static', filename='assets/Galerie/_FVN8309.avif') }}" alt="FVN8309" class="gallery-img">
+          <img src="{{ url_for('static', filename='assets/Galerie/IMG-20250208-WA0041.avif') }}" alt="IMG-20250208-WA0041" class="gallery-img">
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <section id="projects" class="page">
+    <div class="projects-grid">
+      {% for p in projects %}
+      <div class="project-card {{ p.class_attr }}">
+        <h2>{{ p.title }}</h2>
+
+        {% if p.image %}
+        <div class="project-img-container">
+          <img src="{{ url_for('static', filename=p.image) }}" alt="{{ p.title }}" class="pilot-side-img">
+        </div>
+        {% endif %}
+
+        <div class="project-text" lang="en">
+          <p>{{ p.content_en if p.content_en else p.content }}</p>
+        </div>
+
+        <div class="project-text" lang="ro">
+          <p>{{ p.content_ro if p.content_ro else p.content }}</p>
+        </div>
+
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section id="technical" class="page" style="width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; box-sizing: border-box; padding: 0 40px;">
+    <div class="tech-docs-stack" style="width: 100%; max-width: 1400px; margin: 0 auto; box-sizing: border-box;">
+      {% for grp_key, grp_title in tech_groups.items() %}
+      <div id="{{ grp_key }}-pdf-list" class="tech-docs" style="margin-bottom: 50px; width: 100%;">
+        <h3 class="tech-doc-heading" style="font-size: 20px; color: #e63946; margin-bottom: 16px; font-weight: 700;">{{ grp_title }}</h3>
+        <div class="tech-viewer-container" style="display: flex; gap: 30px; background: rgba(0,0,0,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding: 30px; border-radius: 12px; border: 1px solid #222; align-items: stretch; width: 100%; box-sizing: border-box; box-shadow: 0 16px 32px rgba(0,0,0,0.45);">
+          <div class="viewer-window" style="flex: 2.8; background: #151515; border-radius: 8px; border: 1px solid #333; overflow: hidden; height: 580px;">
+            {% if technical[grp_key] and technical[grp_key]|length > 0 %}
+              <iframe id="iframe-{{ grp_key }}" src="{{ url_for('static', filename='assets/pdfs/' + technical[grp_key][0].path) }}" style="width: 100%; height: 100%; border: none;"></iframe>
+            {% else %}
+              <div style="display:flex; justify-content:center; align-items:center; height:100%; color:#555; font-family: monospace;" lang="en">No schematics uploaded for this project yet</div>
+              <div style="display:flex; justify-content:center; align-items:center; height:100%; color:#555; font-family: monospace;" lang="ro">Nu existÄƒ scheme Ã®ncÄƒrcate pentru acest proiect</div>
+            {% endif %}
+          </div>
+          <div class="viewer-controls" style="flex: 1; display: flex; flex-direction: column; gap: 20px; min-width: 320px; max-width: 400px; box-sizing: border-box;">
+            <div class="tab-button-group" style="display: flex; flex-wrap: wrap; gap: 10px; background: #0a0a0a; padding: 8px; border-radius: 6px; border: 1px solid #222; width: 100%; box-sizing: border-box;">
+              {% for doc in technical[grp_key] %}
+                <button class="tech-tab-btn grp-btn-{{ grp_key }} {% if loop.first %}active-tab{% endif %}" onclick="switchTechnicalFile('{{ grp_key }}', '{{ url_for('static', filename='assets/pdfs/' + doc.path) }}', '{{ doc.name }}', this)" style="padding: 10px 16px; border: none; border-radius: 4px; font-weight: bold; font-size: 13px; cursor: pointer; transition: all 0.2s; flex: 1; min-width: 75px; text-align: center;">{{ doc.badge }}</button>
+              {% endfor %}
+            </div>
+            <div class="doc-info-box" style="background: #0a0a0a; padding: 24px; border-radius: 8px; border: 1px solid #1a1a1a; flex: 1; display: flex; flex-direction: column; box-sizing: border-box;">
+              <h4 id="doc-title-{{ grp_key }}" style="color: #fff; font-size: 18px; font-weight: 600; margin-bottom: 12px; border-bottom: 1px solid #222; padding-bottom: 8px;">{% if technical[grp_key] and technical[grp_key]|length > 0 %}{{ technical[grp_key][0].name }}{% else %}No Schematic Selected{% endif %}</h4>
+              <p style="color: #bbb; font-size: 14px; line-height: 1.6; margin-bottom: 20px;" lang="en">Technical asset blueprint vector model.</p>
+              <p style="color: #bbb; font-size: 14px; line-height: 1.6; margin-bottom: 20px;" lang="ro">Model vectorial al activului tehnic structural.</p>
+              <button class="doc-btn" onclick="window.open(document.getElementById('iframe-{{ grp_key }}') ? document.getElementById('iframe-{{ grp_key }}').src : '#', '_blank')" style="width: 100%; background: #457b9d; color: #fff; padding: 14px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: auto; transition: background 0.2s;">
+                <span lang="en">Open Fullscreen / Download Options</span>
+                <span lang="ro">Deschide Fullscreen / OpÈ›iuni DescÄƒrcare</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section id="about" class="page">
+    <div class="team-container">
+      {% for cat_key, cat_title in team_categories.items() %}
+      <div class="team-group">
+        <h2>{{ cat_title }}</h2>
+        <ul class="team-list {{ cat_key }}">
+          {% if team[cat_key] %}
+            {% for m in team[cat_key] %}
+            <li class="team-card" style="position: relative; flex-direction: column; align-items: center; padding: 24px 20px;">
+              <div style="flex: 0 0 auto; display:flex; justify-content:center;">
+                <img src="{{ url_for('static', filename=m.img) }}" alt="{{ m.name }}" style="width: 180px; height: 180px; border-radius: 8px; object-fit: cover;">
+              </div>
+              <div class="profile" style="text-align: center; width: 100%; padding: 16px 0 0 0;">
+                <h3>{{ m.name }}</h3>
+                <p class="role" style="font-weight: bold; margin-bottom: 4px; color: #e63946;">{{ m.role }}</p>
+                <p class="bio" style="font-size:14px; color:#bbb;">{{ m.bio }}</p>
+                {% if m.linkedin %}
+                  <a href="{{ m.linkedin }}" target="_blank" rel="noopener" style="display: inline-block; padding: 6px 14px; background: #0a66c2; color: #fff !important; border-radius: 4px; font-size: 12px; margin-top: 10px; font-weight: bold; text-decoration: none; transition: background 0.2s;">LinkedIn</a>
+                {% endif %}
+              </div>
+            </li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section id="changelog" class="page">
+    <div class="changelog-inner">
+      <div class="timeline">
+        <h1 class="timeline-title" lang="en">Development Timeline</h1>
+        <h1 class="timeline-title" lang="ro">Istoric Dezvoltare</h1>
+        {% for entry in timeline %}
+        <div class="timeline-entry">
+          <div class="date">{{ entry.date }}</div>
+          <ul>{% for ev in entry.events %}<li data-type="{{ ev.type }}"><span class="tag {{ ev.type }}">{{ ev.type | upper }}</span> {{ ev.text }}</li>{% endfor %}</ul>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="page">
+    <div class="contact-container">
+      <div class="contact-info">
+        <h1>Contact</h1>
+        <p class="contact-intro" lang="en">Interested in collaborating, research, or innovation? Reach out and let's build something ambitious together.</p>
+        <p class="contact-intro" lang="ro">EÈ™ti interesat de o colaborare, cercetare sau inovare? ContacteazÄƒ-ne È™i hai sÄƒ construim ceva ambiÈ›ios Ã®mpreunÄƒ.</p>
+        <div class="contact-details">
+          <div><span><u>Email</u></span><a href="mailto:contact@redshift.com">contact@redshift.com</a></div>
+          <div><span><u>Location</u></span><p lang="en">Cluj-Napoca, Romania Â· Europe</p><p lang="ro">Cluj-Napoca, RomÃ¢nia Â· Europa</p></div>
+          <div>
+            <span><u>Social</u></span>
+            <p class="social-links" style="margin-top:10px; margin-bottom: 25px; display: flex; gap: 12px; align-items: center;">
+              {% for s in socials %}
+              <a href="{{ s.url }}" target="_blank" rel="noopener" title="{{ s.platform }}">
+                <img src="{{ url_for('static', filename='assets/images/' + s.icon) }}" alt="{{ s.platform }}" width="22" height="22">
+              </a>
+              {% endfor %}
+            </p>
+          </div>
+
+          <div style="border-top: 2px solid #EC1F24; padding-top: 24px; margin-top: 25px; width: 100%; box-sizing: border-box;">
+            <span id="recruitment-heading" style="font-weight: 900; color: #EC1F24 !important; font-size: 26px; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: -0.2px; white-space: nowrap;" lang="en">Interested in joining our team?</span>
+            <span id="recruitment-heading" style="font-weight: 900; color: #EC1F24 !important; font-size: 26px; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: -0.2px; white-space: nowrap;" lang="ro">Vrei sÄƒ te alÄƒturi echipei noastre?</span>
+            <p style="font-size: 15px; color: #eee !important; margin-bottom: 16px; line-height: 1.5; font-weight: 500;" lang="en">We are always looking for passionate students to join our aerospace divisions.</p>
+            <p style="font-size: 15px; color: #eee !important; margin-bottom: 16px; line-height: 1.5; font-weight: 500;" lang="ro">Suntem mereu Ã®n cÄƒutare de studenÈ›i pasionaÈ›i care sÄƒ se alÄƒture diviziilor noastre.</p>
+            <a href="{{ recruitment_link }}" target="_blank" rel="noopener" style="display: inline-block; background: #EC1F24; color: #fff !important; padding: 12px 24px; border-radius: 6px; font-weight: bold; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(236, 31, 36, 0.4); transition: transform 0.2s;">
+              <span lang="en">Fill Recruitment Form</span>
+              <span lang="ro">CompleteazÄƒ Formularul</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <form id="contact-form-en" method="POST" onsubmit="sendContactMessage(event);">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="https://redshiftaero.com">
+          <input type="text" name="name" placeholder="Your name / Numele tÄƒu" required>
+          <input type="email" name="email" placeholder="Your email / Email" required>
+          <textarea name="message" placeholder="Your message / Mesaj" required></textarea>
+
+          <div class="captcha-container">
+            <input type="checkbox" id="not-robot" class="captcha-checkbox" required>
+            <label for="not-robot" style="font-size: 14px; color: #aaa; cursor: pointer; user-select: none;">
+              <span lang="en">I am not a robot</span>
+              <span lang="ro">Nu sunt robot</span>
+            </label>
+          </div>
+
+          <button type="submit" style="background: #EC1F24 !important; box-shadow: 0 4px 15px rgba(236, 31, 36, 0.4) !important; border: none; font-weight: bold; cursor: pointer; transition: transform 0.2s, background 0.2s;">
+            <span lang="en">Send message</span>
+            <span lang="ro">Trimite mesajul</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="lightbox" class="lightbox">
+  <span class="lightbox-close">&times;</span><img class="lightbox-content" id="lightbox-img" src="" alt=""><span class="lightbox-nav lightbox-prev">&#10094;</span><span class="lightbox-nav lightbox-next">&#10095;</span>
+</div>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <img src="{{ url_for('static', filename='assets/images/logo.avif') }}" alt="RedShift Logo" style="width: 300px; height: auto;">
+      <p lang="en">RedShift Aerospace is an independent aerospace research initiative, focused on engineering, experimentation and applied innovation.</p>
+      <p lang="ro">RedShift Aerospace este o iniÈ›iativÄƒ independentÄƒ de cercetare aerospaÈ›ialÄƒ, axatÄƒ pe inginerie, experimentare È™i inovare aplicatÄƒ.</p>
+    </div>
+    <div class="footer-nav">
+      <a data-page="home"><span lang="en">Home</span><span lang="ro">AcasÄƒ</span></a>
+      <a data-page="projects"><span lang="en">Projects</span><span lang="ro">Proiecte</span></a>
+      <a data-page="about"><span lang="en">About</span><span lang="ro">Despre</span></a>
+    </div>
+    <div class="footer-nav">
+      <a data-page="technical"><span lang="en">Technical</span><span lang="ro">Tehnic</span></a>
+      <a data-page="changelog"><span lang="en">Development Timeline</span><span lang="ro">Istoric</span></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-links"><a href="regulation.html"><span lang="en">Regulation</span><span lang="ro">Regulament</span></a></div>
+    <div class="footer-copy">Â© <a href="/admin" style="color:inherit; text-decoration:none;">RedShift Aerospace</a> 2026. All Rights Reserved.</div>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/navigation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/changelog.js') }}"></script>
+
+<script>
+let currentLang = "en";
+
+function toggleLanguage() {
+  const body = document.body;
+  const btn = document.getElementById('langBtn');
+
+  if (currentLang === "en") {
+    body.classList.add('lang-ro');
+    btn.textContent = "RO";
+    currentLang = "ro";
+  } else {
+    body.classList.remove('lang-ro');
+    btn.textContent = "EN";
+    currentLang = "en";
+  }
+}
+
+async function sendContactMessage(event) {
+  event.preventDefault();
+
+  const form = event.target;
+  const checkbox = document.getElementById('not-robot');
+  const button = form.querySelector('button[type="submit"]');
+
+  if (!checkbox.checked) {
+    if(currentLang === "en") alert("Please verify that you are not a robot.");
+    else alert("Te rugÄƒm sÄƒ verifici cÄƒ nu eÈ™ti robot.");
+    return;
+  }
+
+  const originalText = button.innerHTML;
+  button.disabled = true;
+  button.innerHTML = currentLang === "en" ? "Sending..." : "Se trimite...";
+
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch("https://formsubmit.co/ajax/contact@redshift.com", {
+      method: "POST",
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      if(currentLang === "en") alert("Message sent successfully!");
+      else alert("Mesajul a fost trimis cu succes!");
+      form.reset();
+    } else {
+      throw new Error("Server Error");
+    }
+  } catch (error) {
+    if(currentLang === "en") alert("Oops! Something went wrong. Please try again.");
+    else alert("Oops! Ceva nu a mers bine. Te rugÄƒm sÄƒ Ã®ncerci din nou.");
+  } finally {
+    button.disabled = false;
+    button.innerHTML = originalText;
+  }
+}
+
+function switchTechnicalFile(groupKey, filePath, docName, buttonElement) {
+  const iframe = document.getElementById('iframe-' + groupKey);
+  const titleText = document.getElementById('doc-title-' + groupKey);
+  if (iframe) iframe.src = filePath;
+  if (titleText) titleText.textContent = docName;
+  const buttons = document.querySelectorAll('.grp-btn-' + groupKey);
+  buttons.forEach(btn => btn.classList.remove('active-tab'));
+  buttonElement.classList.add('active-tab');
+}
+
+(function() {
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const galleryImages = document.querySelectorAll('#gallery-grid .gallery-img');
+  const lightboxClose = document.querySelector('.lightbox-close');
+  const lightboxPrev = document.querySelector('.lightbox-prev');
+  const lightboxNext = document.querySelector('.lightbox-next');
+  let currentImageIndex = 0;
+  const imageSources = Array.from(galleryImages).map(img => ({ src: img.src, alt: img.alt }));
+
+  function openLightbox(index) {
+    currentImageIndex = index;
+    lightboxImg.src = imageSources[index].src;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() { lightbox.classList.remove('active'); document.body.style.overflow = 'auto'; }
+  function showPrevImage() { currentImageIndex = (currentImageIndex - 1 + imageSources.length) % imageSources.length; lightboxImg.src = imageSources[currentImageIndex].src; }
+  function showNextImage() { currentImageIndex = (currentImageIndex + 1) % imageSources.length; lightboxImg.src = imageSources[currentImageIndex].src; }
+
+  galleryImages.forEach((img, idx) => img.addEventListener('click', () => openLightbox(idx)));
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightboxPrev.addEventListener('click', showPrevImage);
+  lightboxNext.addEventListener('click', showNextImage);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+})();
+</script>
+</body>
+</html>

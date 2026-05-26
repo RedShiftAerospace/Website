@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RedShift Aero - Admin Control Panel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+  body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding: 40px 20px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  h1 { font-size: 32px; font-weight: 900; color: #EC1F24; margin-bottom: 30px; text-transform: uppercase; letter-spacing: -0.5px; }
+  h2 { font-size: 20px; font-weight: 700; margin: 0 0 15px 0; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
+  .admin-card { background: #111; padding: 25px; border-radius: 12px; margin-bottom: 30px; border: 1px solid #222; box-shadow: 0 8px 16px rgba(0,0,0,0.4); }
+
+  label { display: block; font-size: 12px; font-weight: 600; color: #aaa; margin-bottom: 6px; text-transform: uppercase; }
+  input[type="text"], input[type="url"], textarea, select {
+    width: 100%; padding: 12px; background: #151515; border: 1px solid #333; color: #fff;
+    border-radius: 6px; box-sizing: border-box; font-family: inherit; font-size: 14px; margin-bottom: 15px; transition: border 0.2s;
+  }
+  input:focus, textarea:focus, select:focus { border-color: #EC1F24; outline: none; }
+  textarea { height: 120px; resize: vertical; }
+
+  .btn {
+    background: #EC1F24; color: #fff; padding: 12px 24px; border: none; border-radius: 6px;
+    font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 13px; letter-spacing: 0.5px; transition: background 0.2s, transform 0.1s;
+  }
+  .btn:hover { background: #b91317; }
+  .btn:active { transform: scale(0.98); }
+  .btn-secondary { background: #457b9d; }
+  .btn-secondary:hover { background: #1d3557; }
+  .btn-danger { background: #e63946; }
+  .btn-danger:hover { background: #9b1c2c; }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+  th, td { padding: 12px; text-align: left; border-bottom: 1px solid #222; font-size: 14px; }
+  th { color: #888; font-weight: 600; text-transform: uppercase; font-size: 12px; }
+  tr:hover { background: rgba(255,255,255,0.01); }
+
+  .flex-row { display: flex; gap: 15px; flex-wrap: wrap; }
+  .flex-col { flex: 1; min-width: 200px; }
+  .action-btns { display: flex; gap: 8px; justify-content: flex-end; align-items: center; }
+
+  .badge { display: inline-block; padding: 4px 8px; background: #222; border: 1px solid #333; border-radius: 4px; font-size: 11px; font-family: monospace; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h1>RedShift Aero Control Hub</h1>
+    <a href="/" target="_blank" style="color: #aaa; text-decoration: none; font-weight: bold; font-size: 14px;">← Vezi Site-ul Live</a>
+  </div>
+
+  <div class="admin-card" style="border-color: #457b9d;">
+    <h2 style="color: #457b9d;">1. Cloud Storage Assets Upload</h2>
+    <form action="{{ url_for('upload_asset') }}" method="POST" enctype="multipart/form-data" target="_blank">
+      <input type="hidden" name="password" value="{{ password }}">
+
+      <div class="flex-row">
+        <div class="flex-col">
+          <label>Selectează un folder existent depistat pe server:</label>
+          <select id="folder_select" onchange="document.getElementById('folder_input').value = this.value;">
+            {% for fld in scanned_folders %}
+              <option value="{{ fld }}">{{ fld }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="flex-col">
+          <label>...SAU scrie/creează calea unui folder complet NOU:</label>
+          <input type="text" id="folder_input" name="target_folder" value="assets/Sponsori" placeholder="Ex: assets/pdfs/Folder_Nou_2026" required>
+        </div>
+      </div>
+
+      <div class="flex-row" style="margin-top: 15px;">
+        <div class="flex-col">
+          <label>Selectează Fișierul de pe Disk:</label>
+          <input type="file" name="file_asset" required style="margin-top: 8px; color: #fff;">
+        </div>
+        <div style="display: flex; align-items: flex-end;">
+          <button type="submit" class="btn btn-secondary" style="width: 200px;">Încarcă în cPanel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div id="explorer-sec" class="admin-card" style="border-color: #e63946;">
+    <h2 style="color: #e63946;">2. Live File Explorer & Path Verifier</h2>
+    <p style="font-size:13px; color:#aaa; margin-top:-10px;">Selectează orice director pentru a vedea instant toate fișierele stocate fizic în el. Dai click pe text pentru a copia calea corectă direct în clipboard.</p>
+
+    <div class="flex-row" style="margin-bottom:15px;">
+      <div class="flex-col">
+        <label>Alege directorul pe care vrei să îl explorezi:</label>
+        <select id="explorer_select" onchange="fetchFolderFiles(this.value);" style="margin-bottom:0;">
+          <option value="">-- Selectează un folder --</option>
+          {% for fld in scanned_folders %}
+            <option value="{{ fld }}">{{ fld }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div style="background:#0a0a0a; border:1px solid #222; border-radius:6px; padding:15px; max-height:250px; overflow-y:auto;">
+      <table style="margin:0;">
+        <thead>
+          <tr>
+            <th style="padding:5px 10px;">Nume Fișier Server</th>
+            <th style="padding:5px 10px; text-align:right;">Calea exactă pentru bază de date (Click pentru copiere)</th>
+          </tr>
+        </thead>
+        <tbody id="explorer_table_body">
+          <tr>
+            <td colspan="2" style="color:#555; font-family:monospace; padding:10px;">Niciun folder selectat încă.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="sponsors-sec" class="admin-card">
+    <h2 style="color: #457b9d;">3. Management Sponsori / Parteneri</h2>
+    <form action="{{ url_for('add_sponsor') }}" method="POST" style="background: #0a0a0a; padding: 15px; border-radius: 6px; border: 1px solid #1a1a1a; margin-bottom: 20px;">
+      <input type="hidden" name="password" value="{{ password }}">
+      <div class="flex-row">
+        <div class="flex-col">
+          <label>Nume Sponsor:</label>
+          <input type="text" name="name" placeholder="Ex: Microchip" required>
+        </div>
+        <div class="flex-col">
+          <label>Cale Imagine Logo:</label>
+          <input type="text" name="img" placeholder="Ex: assets/Sponsori/Microcip.avif" required>
+        </div>
+        <div style="display: flex; align-items: flex-end; margin-bottom: 15px;">
+          <button type="submit" class="btn btn-secondary">+ Adaugă Sponsor</button>
+        </div>
+      </div>
+    </form>
+
+    <div style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Logo</th>
+            <th>Nume</th>
+            <th>Cale Relativă Destinație</th>
+            <th style="text-align: right;">Acțiuni</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in sponsors %}
+          <tr>
+            <form action="{{ url_for('edit_sponsor', sp_id=s.id) }}" method="POST">
+              <input type="hidden" name="password" value="{{ password }}">
+              <td><img src="{{ url_for('static', filename=s.img) }}" alt="Preview" height="30" style="object-fit: contain; max-width: 100px; background: rgba(255,255,255,0.03); padding: 2px;"></td>
+              <td><input type="text" name="name" value="{{ s.name }}" style="margin:0; padding:8px;" required></td>
+              <td><input type="text" name="img" value="{{ s.img }}" style="margin:0; padding:8px; font-family:monospace;" required></td>
+              <td style="text-align: right;">
+                <div class="action-btns">
+                  <button type="submit" class="btn btn-secondary" style="padding: 6px 12px; font-size: 11px;">Salvează</button>
+            </form>
+                  <form action="{{ url_for('delete_sponsor', sp_id=s.id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Ștergi sponsorul {{ s.name }}?');">
+                    <input type="hidden" name="password" value="{{ password }}">
+                    <button type="submit" class="btn btn-danger" style="padding: 6px 12px; font-size: 11px;">Șterge</button>
+                  </form>
+                </div>
+              </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="4" style="color: #555; font-family: monospace;">Nu există sponsori configurați în data.json</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="projects-sec" class="admin-card">
+    <h2>4. Management Proiecte & Misiuni (Sistem Bilingv)</h2>
+    <form action="{{ url_for('add_project') }}" method="POST" style="background:#0a0a0a; padding:20px; border-radius:6px; border:1px solid #1a1a1a; margin-bottom:25px;">
+      <input type="hidden" name="password" value="{{ password }}">
+      <div class="flex-row">
+        <div class="flex-col"><label>Titlu Proiect:</label><input type="text" name="title" required></div>
+        <div class="flex-col"><label>Clasă Atribut CSS (Opțional):</label><input type="text" name="class_attr" placeholder="Ex: euroc-2026"></div>
+        <div class="flex-col"><label>Imagine Path (Din Explorer):</label><input type="text" name="image" placeholder="Ex: assets/images/pilot.avif"></div>
+      </div>
+      <div class="flex-row">
+        <div class="flex-col"><label>Conținut / Descriere (ENGLEZĂ):</label><textarea name="content_en" placeholder="Text in English..." required></textarea></div>
+        <div class="flex-col"><label>Conținut / Descriere (ROMÂNĂ):</label><textarea name="content_ro" placeholder="Text in Romana..." required></textarea></div>
+      </div>
+      <button type="submit" class="btn">+ Creează Card Proiect</button>
+    </form>
+
+    {% for p in projects %}
+    <div style="background:#0a0a0a; border:1px solid #222; padding:20px; border-radius:6px; margin-bottom:15px;">
+      <form action="{{ url_for('edit_project', project_id=p.id) }}" method="POST">
+        <input type="hidden" name="password" value="{{ password }}">
+        <div class="flex-row">
+          <div class="flex-col"><label>Titlu:</label><input type="text" name="title" value="{{ p.title }}" required></div>
+          <div class="flex-col"><label>Clasă CSS:</label><input type="text" name="class_attr" value="{{ p.class_attr }}"></div>
+          <div class="flex-col"><label>Imagine Path:</label><input type="text" name="image" value="{{ p.image }}"></div>
+        </div>
+        <div class="flex-row">
+          <div class="flex-col"><label>Conținut ENGLEZĂ:</label><textarea name="content_en" required>{{ p.content_en if p.content_en else p.content }}</textarea></div>
+          <div class="flex-col"><label>Conținut ROMÂNĂ:</label><textarea name="content_ro" required>{{ p.content_ro if p.content_ro else p.content }}</textarea></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="action-btns">
+            <button type="submit" class="btn btn-secondary" style="padding:8px 16px; font-size:12px;">Salvează Modificări</button>
+      </form>
+            <form action="{{ url_for('delete_project', project_id=p.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Ștergi proiectul {{ p.title }}?');">
+              <input type="hidden" name="password" value="{{ password }}">
+              <button type="submit" class="btn btn-danger" style="padding:8px 16px; font-size:12px;">Șterge</button>
+            </form>
+          </div>
+          <div class="action-btns">
+            <form action="{{ url_for('reorder_items', section='projects', item_id=p.id, direction='up') }}" method="POST" style="display:inline;"><input type="hidden" name="password" value="{{ password }}"><button type="submit" class="btn" style="padding:6px 12px; font-size:11px; background:#333;">▲ Sus</button></form>
+            <form action="{{ url_for('reorder_items', section='projects', item_id=p.id, direction='down') }}" method="POST" style="display:inline;"><input type="hidden" name="password" value="{{ password }}"><button type="submit" class="btn" style="padding:6px 12px; font-size:11px; background:#333;">▼ Jos</button></form>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div id="tech-sec" class="admin-card">
+    <h2>5. Documentație Tehnică & Blueprint-uri Vectoriale (IFRAME HUB)</h2>
+    <div class="flex-row" style="margin-bottom: 25px; gap: 20px;">
+      <form action="{{ url_for('add_tech_group') }}" method="POST" style="flex:1; background:#0a0a0a; padding:15px; border-radius:6px; border:1px solid #1a1a1a;">
+        <input type="hidden" name="password" value="{{ password }}">
+        <label style="color:#e63946;">+ Adaugă Proiect Nou pentru Scheme:</label>
+        <input type="text" name="group_title" placeholder="Ex: EuRoC 2025" required>
+        <input type="text" name="group_key" placeholder="Ex: euroc2025" required>
+        <button type="submit" class="btn btn-secondary" style="width:100%;">Creează Secțiune Iframe</button>
+      </form>
+      <form action="{{ url_for('add_technical') }}" method="POST" style="flex:1.5; background:#0a0a0a; padding:15px; border-radius:6px; border:1px solid #1a1a1a;">
+        <input type="hidden" name="password" value="{{ password }}">
+        <label style="color:#457b9d;">+ Adaugă Blueprint PDF în interiorul unui Proiect:</label>
+        <div class="flex-row">
+          <div class="flex-col">
+            <select name="group" required>
+              {% for gk, gt in tech_groups.items() %}
+                <option value="{{ gk }}">{{ gt }} ({{ gk }})</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="flex-col"><input type="text" name="name" placeholder="Nume Document" required></div>
+        </div>
+        <div class="flex-row">
+          <div class="flex-col"><input type="text" name="badge" placeholder="Badge Buton" required></div>
+          <div class="flex-col"><input type="text" name="path" placeholder="Cale Fișier" required></div>
+        </div>
+        <button type="submit" class="btn" style="width:100%; background:#457b9d;">Injetează Document</button>
+      </form>
+    </div>
+
+    {% for gk, gt in tech_groups.items() %}
+    <div id="layout-{{ gk }}" style="background:#0a0a0a; border:1px solid #222; padding:15px; border-radius:6px; margin-bottom:20px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #333; padding-bottom:8px; margin-bottom:12px;">
+        <h3 style="margin:0; font-size:16px; color:#e63946;">Grup: {{ gt }} <span style="color:#555; font-size:12px;">(ID: {{ gk }})</span></h3>
+        <form action="{{ url_for('delete_tech_group', group_key=gk) }}" method="POST" onsubmit="return confirm('Ștergi complet secțiunea de documente {{ gt }}?');">
+          <input type="hidden" name="password" value="{{ password }}">
+          <button type="submit" class="btn btn-danger" style="padding:4px 10px; font-size:11px;">Elimină Secțiune Globală</button>
+        </form>
+      </div>
+      <table>
+        <thead><tr><th>Nume document</th><th>Badge buton</th><th>Cale relativă</th><th style="text-align:right;">Acțiuni</th></tr></thead>
+        <tbody>
+          {% for doc in technical[gk] %}
+          <tr>
+            <form action="{{ url_for('edit_technical', group=gk, doc_id=doc.id) }}" method="POST">
+              <input type="hidden" name="password" value="{{ password }}">
+              <td><input type="text" name="name" value="{{ doc.name }}" style="margin:0; padding:6px;" required></td>
+              <td><input type="text" name="badge" value="{{ doc.badge }}" style="margin:0; padding:6px;" required></td>
+              <td><input type="text" name="path" value="{{ doc.path }}" style="margin:0; padding:6px; font-family:monospace;" required></td>
+              <td style="text-align:right;">
+                <div class="action-btns">
+                  <button type="submit" class="btn btn-secondary" style="padding:6px 10px; font-size:11px;">Salvați</button>
+            </form>
+                  <form action="{{ url_for('delete_technical', group=gk, doc_id=doc.id) }}" method="POST" style="display:inline;">
+                    <input type="hidden" name="password" value="{{ password }}">
+                    <button type="submit" class="btn btn-danger" style="padding:6px 10px; font-size:11px;">Șterge</button>
+                  </form>
+                  <form action="{{ url_for('reorder_items', section=gk, item_id=doc.id, direction='up') }}" method="POST" style="display:inline;"><input type="hidden" name="password" value="{{ password }}"><button type="submit" style="padding:4px 8px; background:#222; color:#fff; border:1px solid #333; cursor:pointer;">▲</button></form>
+                  <form action="{{ url_for('reorder_items', section=gk, item_id=doc.id, direction='down') }}" method="POST" style="display:inline;"><input type="hidden" name="password" value="{{ password }}"><button type="submit" style="padding:4px 8px; background:#222; color:#fff; border:1px solid #333; cursor:pointer;">▼</button></form>
+                </div>
+              </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="4" style="color:#444; font-family:monospace; font-size:13px;">Nu există scheme injectate.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div id="team-sec" class="admin-card">
+    <h2>6. Structură Membrii & Divizii Organizaționale</h2>
+    <div class="flex-row" style="margin-bottom: 25px; gap: 20px;">
+      <form action="{{ url_for('add_team_category') }}" method="POST" style="flex:1; background:#0a0a0a; padding:15px; border-radius:6px; border:1px solid #1a1a1a;">
+        <input type="hidden" name="password" value="{{ password }}">
+        <label style="color:#e63946;">+ Adaugă Departament/Divizie Nouă:</label>
+        <input type="text" name="cat_title" placeholder="Ex: Active Members" required>
+        <input type="text" name="cat_key" placeholder="Ex: members" required>
+        <button type="submit" class="btn btn-secondary" style="width:100%;">Creează Departament</button>
+      </form>
+      <form action="{{ url_for('add_team_member') }}" method="POST" style="flex:1.5; background:#0a0a0a; padding:15px; border-radius:6px; border:1px solid #1a1a1a;">
+        <input type="hidden" name="password" value="{{ password }}">
+        <label style="color:#457b9d;">+ Înrolează Membru Nou în Departament:</label>
+        <div class="flex-row">
+          <div class="flex-col">
+            <select name="category" required>
+              {% for ck, ct in team_categories.items() %}
+                <option value="{{ ck }}">{{ ct }} ({{ ck }})</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="flex-col"><input type="text" name="name" placeholder="Nume Complet" required></div>
+        </div>
+        <div class="flex-row">
+          <div class="flex-col"><input type="text" name="role" placeholder="Funcție/Rol" required></div>
+          <div class="flex-col"><input type="text" name="linkedin" placeholder="URL Profil LinkedIn"></div>
+        </div>
+        <div class="flex-row">
+          <div class="flex-col"><input type="text" name="img" placeholder="Cale Avatar"></div>
+          <div class="flex-col"><input type="text" name="bio" placeholder="Scurtă Descriere Profil"></div>
+        </div>
+        <button type="submit" class="btn" style="width:100%;">Înrolează Membru Oficial</button>
+      </form>
+    </div>
+
+    {% for ck, ct in team_categories.items() %}
+    <div style="background: #0a0a0a; border: 1px solid #222; padding: 15px; border-radius: 6px; margin-bottom: 25px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #333; padding-bottom:8px; margin-bottom:15px;">
+        <h3 style="margin:0; font-size:16px; color:#457b9d;">Divizie: {{ ct }} <span style="color:#555; font-size:12px;">(ID: {{ ck }})</span></h3>
+        <form action="{{ url_for('delete_team_category', cat_key=ck) }}" method="POST" onsubmit="return confirm('Ștergi divizia {{ ct }}?');">
+          <input type="hidden" name="password" value="{{ password }}">
+          <button type="submit" class="btn btn-danger" style="padding:4px 10px; font-size:11px;">Dizolvă Divizie</button>
+        </form>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap:15px;">
+        {% for m in team[ck] %}
+        <div style="background:#111; border:1px solid #222; padding:15px; border-radius:6px;">
+          <form action="{{ url_for('edit_team_member', current_category=ck, member_id=m.id) }}" method="POST">
+            <input type="hidden" name="password" value="{{ password }}">
+            <div class="flex-row">
+              <div class="flex-col"><label>Nume:</label><input type="text" name="name" value="{{ m.name }}" required></div>
+              <div class="flex-col"><label>Rol/Funcție:</label><input type="text" name="role" value="{{ m.role }}" required></div>
+            </div>
+            <div class="flex-row">
+              <div class="flex-col"><label>Imagine:</label><input type="text" name="img" value="{{ m.img }}" required></div>
+              <div class="flex-col"><label>LinkedIn:</label><input type="text" name="linkedin" value="{{ m.linkedin }}"></div>
+            </div>
+            <label>Scurt Bio:</label>
+            <input type="text" name="bio" value="{{ m.bio }}">
+            <label>Schimbă Departamentul:</label>
+            <select name="new_category">
+              {% for opt_k, opt_t in team_categories.items() %}
+                <option value="{{ opt_k }}" {% if opt_k == ck %}selected{% endif %}>{{ opt_t }}</option>
+              {% endfor %}
+            </select>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+              <div class="action-btns" style="gap:5px;">
+                <button type="submit" class="btn btn-secondary" style="padding:6px 12px; font-size:11px;">Actualizează</button>
+          </form>
+                <form action="{{ url_for('delete_team_member', category=ck, member_id=m.id) }}" method="POST" style="display:inline;">
+                  <input type="hidden" name="password" value="{{ password }}">
+                  <button type="submit" class="btn btn-danger" style="padding:6px 12px; font-size:11px;">Șterge</button>
+                </form>
+              </div>
+              <div class="action-btns">
+                <form action="{{ url_for('reorder_items', section=ck, item_id=m.id, direction='up') }}" method="POST" style="display:inline;"><input type="hidden" name="password" value="{{ password }}"><button type="submit" style="padding:4px 8px; background:#222; color:#fff; border:1px solid #333; cursor:pointer;">▲</button></form>
+                <form action="{{ url_for('reorder_items', section=ck, item_id=m.id, direction='down') }}" method="POST" style="display:inline;"><input type="hidden" name="password" value="{{ password }}"><button type="submit" style="padding:4px 8px; background:#222; color:#fff; border:1px solid #333; cursor:pointer;">▼</button></form>
+              </div>
+            </div>
+        </div>
+        {% else %}
+        <div style="color:#444; font-family:monospace; font-size:13px; padding:10px;">Nu există membrii înrolați.</div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div id="timeline-sec" class="admin-card">
+    <h2>7. Istoric Dezvoltare & Misiuni Cronologice</h2>
+    <form action="{{ url_for('add_timeline') }}" method="POST" style="background: #0a0a0a; padding: 20px; border-radius: 6px; border: 1px solid #1a1a1a; margin-bottom: 25px;">
+      <input type="hidden" name="password" value="{{ password }}">
+      <div class="flex-row">
+        <div class="flex-col"><label>Dată Punct Cronologic:</label><input type="text" name="date" placeholder="Ex: 27.11.2025" required></div>
+        <div class="flex-col">
+          <label>Tip Marcaj Sub-Eveniment:</label>
+          <select name="event_type" required>
+            <option value="added">ADDED</option>
+            <option value="updated">UPDATED</option>
+            <option value="fixed">FIXED</option>
+          </select>
+        </div>
+        <div class="flex-col"><label>Cale Imagine Banner:</label><input type="text" name="image" placeholder="Ex: assets/images/TECIF2025.avif"></div>
+      </div>
+      <label>Descriere Acțiune Eveniment:</label>
+      <textarea name="event_text" placeholder="Descrieți acțiunea..." required></textarea>
+      <button type="submit" class="btn">+ Publică Punct Istoric</button>
+    </form>
+
+    {% for entry in timeline %}
+    <div style="background:#0a0a0a; border:1px solid #222; padding:15px; border-radius:6px; margin-bottom:20px;">
+      <form action="{{ url_for('edit_timeline_root', entry_id=entry.id) }}" method="POST" style="background:rgba(255,255,255,0.02); padding:10px; border-radius:4px; margin-bottom:15px; border:1px solid #222;">
+        <input type="hidden" name="password" value="{{ password }}">
+        <div class="flex-row" style="align-items:flex-end;">
+          <div class="flex-col"><label style="color:#EC1F24;">Modifică Data:</label><input type="text" name="date" value="{{ entry.date }}" style="margin:0;" required></div>
+          <div class="flex-col"><label>Modifică Banner Imagine:</label><input type="text" name="image" value="{{ entry.image }}" style="margin:0;"></div>
+          <div><button type="submit" class="btn btn-secondary" style="padding:10px 15px; font-size:11px;">Actualizează</button></div>
+        </div>
+      </form>
+
+      <table style="margin:0;">
+        <tbody>
+          {% for ev in entry.events %}
+          <tr>
+            <form action="{{ url_for('edit_timeline_sub_event', entry_id=entry.id, sub_id=ev.sub_id) }}" method="POST">
+              <input type="hidden" name="password" value="{{ password }}">
+              <td style="width:150px;">
+                <select name="event_type" style="margin:0; padding:6px;">
+                  <option value="added" {% if ev.type == 'added' %}selected{% endif %}>ADDED</option>
+                  <option value="updated" {% if ev.type == 'updated' %}selected{% endif %}>UPDATED</option>
+                  <option value="fixed" {% if ev.type == 'fixed' %}selected{% endif %}>FIXED</option>
+                </select>
+              </td>
+              <td><input type="text" name="event_text" value="{{ ev.text }}" style="margin:0; padding:6px;" required></td>
+              <td style="text-align:right; width:220px;">
+                <div class="action-btns">
+                  <button type="submit" class="btn btn-secondary" style="padding:6px 10px; font-size:11px;">Modifică</button>
+            </form>
+                  <form action="{{ url_for('delete_timeline_sub_event', entry_id=entry.id, sub_id=ev.sub_id) }}" method="POST" style="display:inline;">
+                    <input type="hidden" name="password" value="{{ password }}">
+                    <button type="submit" class="btn btn-danger" style="padding:6px 10px; font-size:11px;">Șterge</button>
+                  </form>
+                </div>
+              </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="admin-card" style="border-color:#333; background:#0a0a0a;">
+    <h2>8. Setări Avansate Platformă & Canale Social Media</h2>
+    <div class="flex-row" style="gap:20px;">
+      <div id="recruitment-config-sec" style="flex:1; background:#111; padding:15px; border-radius:6px; border:1px solid #222;">
+        <form action="{{ url_for('update_recruitment') }}" method="POST">
+          <input type="hidden" name="password" value="{{ password }}">
+          <label>Link Formular Google Recrutare:</label>
+          <input type="url" name="recruitment_link" value="{{ recruitment_link }}" required>
+          <button type="submit" class="btn btn-secondary" style="width:100%;">Salvează Link</button>
+        </form>
+      </div>
+
+      <div id="statut-config-sec" style="flex:1; background:#111; padding:15px; border-radius:6px; border:1px solid #222;">
+        <form action="{{ url_for('update_statut_path') }}" method="POST">
+          <input type="hidden" name="password" value="{{ password }}">
+          <label>Cale PDF Statut Legal:</label>
+          <input type="text" name="statut_pdf_path" value="{{ statut_pdf_path }}" required>
+          <div style="margin-bottom:15px; display:flex; align-items:center; gap:8px;">
+            <input type="checkbox" name="statut_visible" id="sv_chk" {% if statut_visible %}checked{% endif %} style="width:18px; height:18px; accent-color:#EC1F24;">
+            <label for="sv_chk" style="margin:0; cursor:pointer;">Afișează în Navbar</label>
+          </div>
+          <button type="submit" class="btn btn-secondary" style="width:100%;">Actualizează Statut</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="socials-config-sec" style="background:#111; padding:20px; border-radius:6px; border:1px solid #222; margin-top:20px;">
+      <h3 style="font-size:15px; color:#457b9d; margin:0 0 12px 0; text-transform:uppercase;">Canale Social Media:</h3>
+      <form action="{{ url_for('add_social') }}" method="POST" style="display:flex; gap:12px; margin-bottom:15px;">
+        <input type="hidden" name="password" value="{{ password }}">
+        <input type="text" name="platform" placeholder="Platformă" required style="margin:0;">
+        <input type="url" name="url" placeholder="URL Complet" required style="margin:0;">
+        <input type="text" name="icon" placeholder="Nume SVG (ex: github.svg)" required style="margin:0;">
+        <button type="submit" class="btn" style="background:#457b9d;">+ Adaugă</button>
+      </form>
+      <table>
+        <thead><tr><th>Platformă</th><th>Adresă URL</th><th>Nume SVG Iconiță</th><th style="text-align:right;">Acțiuni</th></tr></thead>
+        <tbody>
+          {% for s in socials %}
+          <tr>
+            <form action="{{ url_for('edit_social', soc_id=s.id) }}" method="POST">
+              <input type="hidden" name="password" value="{{ password }}">
+              <td><input type="text" name="platform" value="{{ s.platform }}" style="margin:0; padding:6px;" required></td>
+              <td><input type="url" name="url" value="{{ s.url }}" style="margin:0; padding:6px;" required></td>
+              <td><input type="text" name="icon" value="{{ s.icon }}" style="margin:0; padding:6px;" required></td>
+              <td style="text-align:right;">
+                <div class="action-btns">
+                  <button type="submit" class="btn btn-secondary" style="padding:6px 12px; font-size:11px;">Modifică</button>
+            </form>
+                  <form action="{{ url_for('delete_social', social_id=s.id) }}" method="POST" onsubmit="return confirm('Elimini canalul {{ s.platform }}?');" style="display:inline;">
+                    <input type="hidden" name="password" value="{{ password }}">
+                    <button type="submit" class="btn btn-danger" style="padding:6px 12px; font-size:11px;">Șterge</button>
+                  </form>
+                </div>
+              </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+function fetchFolderFiles(folderName) {
+  const tbody = document.getElementById('explorer_table_body');
+  if (!folderName) { tbody.innerHTML = '<tr><td colspan="2" style="color:#555; padding:10px;">Niciun folder selectat încă.</td></tr>'; return; }
+  tbody.innerHTML = '<tr><td colspan="2" style="color:#aaa; padding:10px;">Se scanează fișierele de pe disc...</td></tr>';
+  fetch(`/admin/api/list_files?password={{ password }}&folder=${encodeURIComponent(folderName)}`)
+    .then(res => res.json()).then(data => {
+      if (data.error) { tbody.innerHTML = `<tr><td colspan="2" style="color:#e63946; padding:10px;">Eroare: ${data.error}</td></tr>`; return; }
+      if (!data.files || data.files.length === 0) { tbody.innerHTML = '<tr><td colspan="2" style="color:#666; padding:10px;">Folderul este gol.</td></tr>'; return; }
+      let html = '';
+      data.files.forEach(file => {
+        const fullDbPath = `${folderName}/${file}`;
+        html += `
+          <tr style="border-bottom:1px solid #1a1a1a;">
+            <td>📁 ${file}</td>
+            <td style="text-align:right;">
+              <input type="text" value="${fullDbPath}" readonly onclick="this.select(); document.execCommand('copy'); alert('Cale copiată automat în Clipboard!');" style="width:80%; padding:5px; background:#000; border:1px solid #333; color:#457b9d; font-family:monospace; cursor:pointer; text-align:center; margin:0;">
+            </td>
+          </tr>`;
+      });
+      tbody.innerHTML = html;
+    });
+}
+</script>
+</body>
+</html>

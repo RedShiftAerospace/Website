@@ -1,0 +1,403 @@
+{
+  "sponsors": [
+    {
+      "id": "sp_1",
+      "name": "Rospin",
+      "img": "assets/Sponsori/Rospin.avif"
+    },
+    {
+      "id": "sp_2",
+      "name": "UBB Physics",
+      "img": "assets/Sponsori/UBBFizica.avif"
+    },
+    {
+      "id": "sp_3",
+      "name": "ASF UBB",
+      "img": "assets/Sponsori/ASFUBB.avif"
+    },
+    {
+      "id": "sp_4",
+      "name": "Carfil",
+      "img": "assets/Sponsori/carfilogo.avif"
+    },
+    {
+      "id": "sp_5",
+      "name": "Microchip",
+      "img": "assets/Sponsori/microcip.avif"
+    }
+  ],
+  "team": {
+    "mentors": [
+      {
+        "id": "0504f6d0",
+        "name": "Alex Muresan",
+        "role": "Mentor",
+        "bio": "Analythics",
+        "img": "assets/Mentori/AlexMuresean.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "1936a087",
+        "name": "Hirian Razvan",
+        "role": "Mentor",
+        "bio": "Materials Science",
+        "img": "assets/Mentori/Razvan.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "207ea10c",
+        "name": "Alin Bustihan",
+        "role": "Mentor",
+        "bio": "Additive Manufacturing",
+        "img": "assets/Membri/BustihanAlin.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "1",
+        "name": "Radu Hațegan",
+        "role": "Mentor",
+        "bio": "Materials Science",
+        "img": "assets/Membri/RaduH.avif",
+        "linkedin": ""
+      }
+    ],
+    "leaders": [
+      {
+        "id": "fef7b70e",
+        "name": "Lucas Toma",
+        "role": "Project Leader",
+        "bio": "4th Year Student, Faculty of Physics, Engineering Physics",
+        "img": "assets/Membri/Lucas.avif",
+        "linkedin": "https://www.linkedin.com/in/lucasdantoma/"
+      },
+      {
+        "id": "5e2e8bb9",
+        "name": "Fluture-Căprian Stefan-Paul",
+        "role": "Technical Leader",
+        "bio": " Analytics",
+        "img": "assets/Membri/FlutureCaprianStefanPaul.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "cedd6d6b",
+        "name": "Dragoș Pintilei",
+        "role": "Electronics Leader(Break)",
+        "bio": "4th Year Student, Faculty of Physics, Engineering Physics",
+        "img": "assets/Membri/Dragos.avif",
+        "linkedin": "https://www.linkedin.com/in/pintilei-dragos-aa355220b/"
+      },
+      {
+        "id": "c1b78c1b",
+        "name": "Teodor Dinu",
+        "role": "Materials Leader",
+        "bio": "Graduate of the Faculty of Physics, Engineering Physics",
+        "img": "assets/Membri/Tory.avif",
+        "linkedin": "https://www.linkedin.com/in/teodor-gabriel-dinu-63a707357/"
+      }
+    ],
+    "members": [
+      {
+        "id": "5c87dbdb",
+        "name": "Raul Simonca",
+        "role": "Electronics and Payload Lead",
+        "bio": "",
+        "img": "assets/Membri/RaulS.avif",
+        "linkedin": "https://www.linkedin.com/in/raul-simonca-a65858277/"
+      },
+      {
+        "id": "097eb9a4",
+        "name": "Rotariu Serban",
+        "role": "Propulsion Lead",
+        "bio": "",
+        "img": "assets/Membri/SerbanR.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "9c1f0338",
+        "name": "Ovidiu Agarbicean",
+        "role": "Propulsion Systems",
+        "bio": "",
+        "img": "assets/Membri/Ovidiu.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "687f2d01",
+        "name": "Izabela Tivadar",
+        "role": "Logistics & Art Direction",
+        "bio": "",
+        "img": "assets/Membri/Iza.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "0b874016",
+        "name": "Furdui Andreea",
+        "role": "Propulsion Systems",
+        "bio": "",
+        "img": "assets/Membri/AndreeaP.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "6f064e59",
+        "name": "Budiu Flavius",
+        "role": "Materials & CAD",
+        "bio": "",
+        "img": "assets/Membri/Flopy.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "433a88a5",
+        "name": "Giurgiu Roxana",
+        "role": "Propulsion",
+        "bio": "",
+        "img": "assets/Membri/RoxanaG.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "305ca119",
+        "name": "Onica Nicolae",
+        "role": "Materials & CAD",
+        "bio": "",
+        "img": "assets/Membri/OnicaNicolae.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "8ba55220",
+        "name": "Ștefan Pavel",
+        "role": "Electronics and Payload",
+        "bio": "",
+        "img": "assets/Membri/pavel.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "a49bb279",
+        "name": "Morușca Sarah",
+        "role": "Propulsion",
+        "bio": "",
+        "img": "assets/Membri/Sarah.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "0dbabea0",
+        "name": "Sergiu Muresean",
+        "role": "Logistics & Art Direction",
+        "bio": "",
+        "img": "assets/Membri/SergiumMuresean.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "ad0c7ee8",
+        "name": "Cătălin Ardelean",
+        "role": "Materials & CAD",
+        "bio": "",
+        "img": "assets/Membri/Catalin.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "ee85c44a",
+        "name": "Nix",
+        "role": "Logistics & Art Direction",
+        "bio": "",
+        "img": "assets/Membri/Nix.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "acbbac9d",
+        "name": "Yvonne Alexandra Niţu",
+        "role": "Analytics",
+        "bio": "",
+        "img": "assets/Membri/YvonneAlexandraNitu.avif",
+        "linkedin": ""
+      }
+    ],
+    "alumni": [
+      {
+        "id": "69c4095a",
+        "name": "Tudor Aducesei",
+        "role": "Former Student ",
+        "bio": "Former student at Technical University of Cluj",
+        "img": "assets/Alumi/TudorUT.avif",
+        "linkedin": ""
+      },
+      {
+        "id": "60588895",
+        "name": "Stefan Cojocariu",
+        "role": "Alum",
+        "bio": "Master's Student in Computational Physics",
+        "img": "assets/Membri/Stefan.avif",
+        "linkedin": ""
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "id": "tl_1",
+      "date": "12.05.2025",
+      "image": "",
+      "events": [
+        {
+          "type": "added",
+          "text": "New member recruitment opened for December 2025."
+        },
+        {
+          "type": "updated",
+          "text": "With the recruitment campaign we also started preparation activities for EuRoC 2026."
+        }
+      ]
+    },
+    {
+      "id": "tl_2",
+      "date": "11.27.2025",
+      "image": "assets/images/TECIF2025.avif",
+      "events": [
+        {
+          "type": "added",
+          "text": "Leading committee participated at TECIF 2025 (Taiwan‑Europe Chip Innovation Forum)."
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "p1",
+      "title": "NGO",
+      "class_attr": "",
+      "image": "",
+      "content": "We are at a stage where the process of establishing the NGO is almost complete, with only the final formal steps remaining. This direction came naturally as our projects grew and required a more structured and stable framework. Becoming an NGO allows us to work in a more organized way, with clear objectives and defined responsibilities. It also gives us greater credibility when engaging with partners, sponsors, and institutions. For our team, this represents a natural step forward, helping us strengthen what we have already built and move toward long-term impact."
+    },
+    {
+      "id": "p2",
+      "title": "EuRoC 2026",
+      "class_attr": "euroc-2026",
+      "image": "assets/images/Nocturna2.avif",
+      "content": "For the EuRoC 2026 competition, Redshift Aerospace initiated Project NOCTURNA, a student-developed experimental launch vehicle designed to carry a 6.5 kg, 5U CubeSat-inspired payload to an altitude of approximately 9,000 meters.\r\n\r\nThe rocket is powered by our custom-developed SRAD solid motor, ALAN-7, developed following an extensive propulsion and structural testing campaign involving multiple aerodynamic and systems-integration iterations.\r\n\r\nBeyond propulsion performance, the project focuses on avionics reliability, recovery-system autonomy, telemetry infrastructure, and high-speed flight stability throughout subsonic, transonic, and supersonic flight regimes.\r\n\r\nNOCTURNA also represents an important step in the evolution of Redshift Aerospace into a multidisciplinary aerospace engineering organization bringing together students from multiple universities and technical fields across Transylvania.\r\n"
+    },
+    {
+      "id": "p3",
+      "title": "EuRoC 2025",
+      "class_attr": "euroc-2025",
+      "image": "assets/images/Euroc251.avif",
+      "content": "In this discussion, I would describe the project as the structural and geometric design of a small-scale launch vehicle developed as a three-dimensional CAD model in SolidWorks. The project focuses on a cylindrical rocket body intended for educational or experimental aerospace applications. From the beginning, the design approach emphasizes dimensional accuracy, ease of manufacturing, and compatibility with standardized payload interfaces. From a geometric point of view, the project is based on an axially symmetric cylindrical structure, with a constant external diameter along most of its length. This choice is deliberate, as it supports aerodynamic stability during ascent and helps reduce drag by avoiding sudden changes in cross-section. All dimensions are defined in centimeters, following engineering drawing conventions, and are selected to ensure compatibility with small-scale launch systems and typical competition constraints. Internally, the rocket body is sized to house a modular payload assembly while preserving enough wall thickness to guarantee structural rigidity. The relationship between internal volume and external diameter represents a balance between payload capacity and mechanical strength, allowing the structure to withstand axial loads, vibrations, and short-duration stresses encountered during launch. The SolidWorks model includes multiple orthographic views and a sectional view that clearly show key features such as wall thickness, internal clearances, and interface regions. A detailed, enlarged view is used to highlight areas of mechanical importance, particularly payload retention zones and internal shoulders, where dimensional precision is critical. All dimensions are annotated using consistent tolerancing conventions, making the design suitable for reproducible manufacturing with standard fabrication techniques. The use of explicit decimal tolerances ensures that any deviations introduced during machining or additive manufacturing remain within acceptable limits, maintaining proper alignment between the rocket body and the internal subsystems. Although no specific material is assigned in the project, the geometry is compatible with commonly used aerospace and prototyping materials, including aluminum alloys, composite tubes, and high-strength polymers. The constant cross-section and the absence of complex features make the design appropriate for both subtractive manufacturing and additive processes. Surface finish requirements are intentionally left flexible, allowing post-processing to be adapted to aerodynamic or structural needs, and the overall simplicity supports rapid design iterations in experimental environments. From a systems integration perspective, the rocket body acts as the main structural backbone of the launch vehicle. Its internal dimensions allow payload modules, avionics, and deployment mechanisms to be integrated without extensive secondary structures. The cylindrical form supports concentric stacking of components, which helps distribute loads uniformly along the longitudinal axis. In addition, the lack of external protrusions minimizes aerodynamic disturbances and reduces the risk of asymmetric loading during ascent, an important consideration for small-scale rockets. The project follows standard engineering documentation practices within SolidWorks, including clear use of scales, projection views, and complete dimensional definition. These choices ensure that the design can be interpreted unambiguously by manufacturing personnel or collaborators. Clear guidance on scale usage and the avoidance of manual scaling further reduce the risk of dimensional errors when the drawings are shared or reproduced. Functionally, the rocket structure serves both as a protective enclosure and as a load-bearing element. During ascent, it must resist axial compression from propulsion and bending moments generated by aerodynamic forces. The uniform geometry and centralized mass distribution contribute to predictable structural behavior. At the same time, the internal layout supports reliable payload deployment, ensuring separation without interference from the surrounding structure during critical mission phases. Official blueprint metrics can be referenced within our attached design layouts. Overall, the project defines a structurally efficient and geometrically coherent rocket body suitable for small-scale aerospace missions. Through careful control of dimensions, tolerances, and overall form, the design achieves a balance between simplicity, functionality, and adaptability, providing a solid foundation for experimental launch activities and reliable payload integration."
+    },
+    {
+      "id": "p4",
+      "title": "CanSat 2024",
+      "class_attr": "",
+      "image": "assets/images/CanSat.avif",
+      "content": "This project presents the design, development, and testing of a modular CanSat-based atmospheric data collection system developed for the Romanian CanSat and Rocketry Competition. The proposed system introduces an unconventional multi-probe architecture, consisting of a primary CanSat carrier and three autonomous slow-descent sub-probes, herein referred to as disk probes. The mission aims to improve spatial resolution in atmospheric measurements by dispersing multiple sensing units over a defined volume of airspace during descent. The primary scientific objective of the mission is the acquisition of environmental data related to atmospheric pressure, temperature, and pollution concentration across a three-dimensional region. Unlike traditional CanSat missions that rely on a single descent vehicle, this system deploys multiple sub-probes to enable vectorial analysis of atmospheric parameters. By correlating simultaneous measurements from spatially separated probes, the system facilitates the reconstruction of pressure gradients, temperature differentials, and pollutant flow vectors. Potential applications include environmental monitoring, meteorological modeling, and low-cost atmospheric surveying for civilian and research purposes. The mechanical architecture consists of a lightweight aluminum main canister housing three disk-shaped sub-probes fabricated primarily from biodegradable PLA using additive manufacturing techniques. The design prioritizes mass efficiency, compact stowage, and reliable deployment. During launch, the disk probes are stacked concentrically within the main tube. Following apogee, a time-delayed spring mechanism ejects the sub-probes into free fall. Each disk probe incorporates a spring-actuated deployable wing, designed as a slightly asymmetrical biconvex airfoil. Upon release from the confinement of the main tube, the wing deploys automatically, converting vertical descent into a controlled autorotative motion. This aerodynamic mechanism reduces terminal velocity and stabilizes descent by transforming gravitational potential energy into angular momentum. The resulting slow, rotating fall enables extended data acquisition time and spatial dispersion. Each disk probe functions as an independent sensing and communication unit. The onboard electronics are centered around an Arduino Pro Mini microcontroller, which manages sensor data acquisition, processing, and transmission. Environmental sensing is achieved through a BMP280 temperature and pressure sensor and an MQ135 gas sensor capable of detecting variations in air quality parameters such as CO₂ concentration. A NEO-6M GPS module provides positional data, enabling post-flight reconstruction of probe trajectories and spatial correlation of measurements. Wireless communication between the probes and the ground station is implemented using HC-12 RF transceivers operating in the 433 MHz band. Each probe transmits data packets at five-second intervals on a dedicated frequency channel to avoid interference. Power is supplied by individual Li-ion batteries, dimensioned to support extended operation well beyond the expected descent duration. The embedded software is responsible for sensor polling, data formatting, and serial transmission over the RF link. Data acquisition occurs in real time, with measurements stored temporarily onboard and transmitted periodically to the ground station. Ground support equipment consists of multiple receiver units connected to computers that log incoming data streams for subsequent manual aggregation and analysis. This distributed reception approach aligns with the system’s multi-probe philosophy and ensures redundancy. Testing Methodology and Validation: Validation of the system involved extensive mechanical and electronic testing. Mechanical tests focused on deployment reliability, descent stabilization, and structural integrity under impact conditions. Controlled drop tests from heights of approximately 20 meters were conducted to evaluate wing deployment timing and descent rates, targeting a velocity range of 6–12 m/s. Electronic testing verified sensor accuracy, RF transmission reliability over distances up to 1 km, and system robustness under battery-powered operation. Results demonstrated high reliability of the electronic and communication subsystems, with sensor data closely matching reference meteorological sources and packet loss rates remaining within acceptable limits. Mechanical testing informed iterative design changes, leading to the adoption of the final disk probe architecture optimized for stability and survivability. Conclusion: The proposed multi-probe CanSat system represents a scalable and cost-effective approach to atmospheric data collection. By leveraging spatially distributed slow-descent probes, the project extends the analytical capabilities of traditional CanSat missions and demonstrates the feasibility of vector-based environmental sensing within severe size and mass constraints."
+    }
+  ],
+  "technical": {
+    "euroc2026": [
+      {
+        "id": "tc1",
+        "name": "Payload Preliminary Report",
+        "badge": "PaylPrelRep",
+        "path": "EuRoC_2026/Payload_Preliminary_Report.pdf"
+      },
+      {
+        "id": "c598d2be",
+        "name": "Simulation Results",
+        "badge": "SimResult",
+        "path": "EuRoC_2026/RASAERO_II_Simulation_Results.pdf"
+      },
+      {
+        "id": "580c3451",
+        "name": "Motor Schematics ",
+        "badge": "MotorSchematic",
+        "path": "EuRoC_2026/Motor_Drawing.pdf"
+      },
+      {
+        "id": "1a53e1e7",
+        "name": "Rocket Body Schematics",
+        "badge": "RocketSchematic",
+        "path": "EuRoC_2026/Drawing_1.pdf"
+      }
+    ],
+    "euroc2025": [
+      {
+        "id": "tc3",
+        "name": "SolidWorks Model",
+        "badge": "SW Model",
+        "path": "EuRoC_2025/SolidWorks_Model.pdf"
+      },
+      {
+        "id": "tc4",
+        "name": "Rocket Simulation",
+        "badge": "Simulation",
+        "path": "EuRoC_2025/Rocket_Simulation.pdf"
+      },
+      {
+        "id": "tc5",
+        "name": "Propulsion & Trajectory",
+        "badge": "Prop&Traj",
+        "path": "EuRoC_2025/Rocket_propulsion_and_trajectory_model.pdf"
+      },
+      {
+        "id": "tc6",
+        "name": "Preliminary Propulsion",
+        "badge": "PrelimProduction",
+        "path": "EuRoC_2025/Preliminary_Propulsion_Report.pdf"
+      }
+    ],
+    "cansat": [
+      {
+        "id": "tc7",
+        "name": "HANDDRAWN2024",
+        "badge": "HandDrawn",
+        "path": "CanSat_2024_2023/HANDDRAWN2024.pdf"
+      },
+      {
+        "id": "tc8",
+        "name": "PDR2024first",
+        "badge": "PDR2024",
+        "path": "CanSat_2024_2023/PDR2024first.pdf"
+      },
+      {
+        "id": "tc9",
+        "name": "PDR2024final",
+        "badge": "PDRR2024Final",
+        "path": "CanSat_2024_2023/PDR2024final.pdf"
+      },
+      {
+        "id": "tc10",
+        "name": "PDR2023first",
+        "badge": "PDR2023",
+        "path": "CanSat_2024_2023/PDR2023first.pdf"
+      }
+    ]
+  },
+  "technical_groups": {
+    "euroc2026": "EuRoC 2026",
+    "euroc2025": "EuRoC 2025",
+    "cansat": "CanSat 2024 & 2023"
+  },
+  "recruitment_link": "https://docs.google.com/forms/d/e/1FAIpQLSc0sExcbRwoZ4OSa4vExUvVAtfaeEptkqBvAY97-HeXpjt-uQ/viewform",
+  "statut_pdf_path": "assets/pdfs/statut.pdf",
+  "statut_visible": false,
+  "socials": [
+    {
+      "id": "soc_1",
+      "platform": "LinkedIn",
+      "url": "https://www.linkedin.com/company/redshift-aerospace-industries/",
+      "icon": "linkedin.svg"
+    },
+    {
+      "id": "soc_2",
+      "platform": "GitHub",
+      "url": "https://github.com/RedShiftAerospace",
+      "icon": "github.svg"
+    },
+    {
+      "id": "soc_3",
+      "platform": "Instagram",
+      "url": "https://www.instagram.com/redshiftaero/",
+      "icon": "instagram.svg"
+    }
+  ],
+  "team_categories": {
+    "mentors": "Mentors",
+    "leaders": "Team Leaders",
+    "members": "Active Members",
+    "alumni": "Alumns"
+  }
+}

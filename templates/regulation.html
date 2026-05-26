@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Regulation</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+</head>
+<body>
+  <header style="display: flex; justify-content: center; align-items: center; margin-top: 0; margin-bottom: 0;">
+    <a href="/" title="Home">
+      <img src="{{ url_for('static', filename='assets/images/logo.avif') }}" alt="RedShift Aerospace" style="height: 70px; width: auto; display: block;" />
+    </a>
+  </header>
+  <main class="pages">
+    <section class="page active" style="min-height: 60vh; display: flex; align-items: center; justify-content: center;">
+      <div style="background: rgba(0,0,0,0.45); backdrop-filter: blur(6px); box-shadow: 0 4px 24px rgba(0,0,0,0.2); border-radius: 18px; padding: 2.5rem 2.5rem; max-width: 700px; color: #fff; font-size: 1.1rem; text-align: left;">
+        <h1 style="text-align:center; margin-bottom: 1.5rem; font-size:2rem;">RedShift Aerospace Team Regulations</h1>
+        <ol style="padding-left: 1.2em;">
+          <li style="margin-bottom:1em;"><b>Full Engagement</b><br>
+            Every member actively contributes to projects, meetings, and tests.<br>
+            Assigned responsibilities must be completed on time and with attention to detail.
+          </li>
+          <li style="margin-bottom:1em;"><b>Open and Respectful Communication</b><br>
+            Discussions are conducted with respect and transparency.<br>
+            Criticism is constructive, and all ideas are heard and valued.
+          </li>
+          <li style="margin-bottom:1em;"><b>Rigorous Planning and Organization</b><br>
+            Deadlines are respected, and every task is clearly documented.<br>
+            Meetings must have a clear agenda and defined objectives.
+          </li>
+          <li style="margin-bottom:1em;"><b>Collaboration and Mutual Support</b><br>
+            Team members work together and provide help when challenges arise.<br>
+            Tasks are distributed according to skills and interests.
+          </li>
+          <li style="margin-bottom:1em;"><b>Integrity and Academic Responsibility</b><br>
+            Team materials and ideas remain confidential until official release.<br>
+            Ethical standards and research integrity are strictly observed.
+          </li>
+          <li style="margin-bottom:1em;"><b>Safety and Compliance with Technical Protocols</b><br>
+            Equipment and tests are used according to safety protocols.<br>
+            Any incidents or risks are reported immediately to the coordinator.
+          </li>
+          <li style="margin-bottom:1em;"><b>Continuous Improvement</b><br>
+            The team is open to feedback and innovation.<br>
+            Progress and workflows are regularly reviewed for optimization.
+          </li>
+        </ol>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
